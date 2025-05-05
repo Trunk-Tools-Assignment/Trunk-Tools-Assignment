@@ -1,13 +1,18 @@
 import express, { Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
 import conversionRoutes from './routes/conversion';
+import healthRoutes from './routes/health';
 import { errorHandler } from './middleware/errorHandler';
 import prisma from './lib/prisma';
 import logger from './lib/logger';
 import { extractUserId } from './lib/auth';
+import { setupSwagger } from './lib/swagger';
 
 // Initialize Express app
 const app = express();
+
+// Configure and setup Swagger documentation
+setupSwagger(app);
 
 // Rate limiting configuration
 // Different rate limits for weekdays and weekends to handle varying traffic patterns
@@ -50,32 +55,8 @@ app.use(express.json());
 app.use(weekdayLimit);
 app.use(weekendLimit);
 
-// Health check endpoint
-// Used by monitoring systems to check if the service is healthy
-// Returns system information and database connectivity status
-app.get('/health', (req: Request, res: Response) => {
-  // Test database connectivity with a simple query
-  prisma.$queryRaw`SELECT 1 AS health`
-    .then(() => {
-      res.status(200).json({
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        uptime: process.uptime(), // Time in seconds since the server started
-        memory: process.memoryUsage(), // Memory statistics for monitoring
-        version: process.env.npm_package_version || 'unknown',
-      });
-    })
-    .catch((error: Error) => {
-      logger.error('Health check database error:', error);
-      res.status(500).json({
-        status: 'error',
-        error: 'Database connection error',
-        timestamp: new Date().toISOString(),
-      });
-    });
-});
-
 // Routes
+app.use('/health', healthRoutes);
 app.use('/api/convert', conversionRoutes);
 
 // Error handling

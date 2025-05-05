@@ -14,6 +14,8 @@ A TypeScript and Express-based currency conversion service that supports both FI
 - In-memory caching to reduce API calls
 - Structured logging with Winston
 - Full TypeScript support with strong typing
+- API documentation with OpenAPI/Swagger UI at /api-docs
+- Docker support for containerized deployment
 
 ## Technical Architecture
 
@@ -28,6 +30,8 @@ A TypeScript and Express-based currency conversion service that supports both FI
 - **Winston** - Logging
 - **Jest** - Testing framework
 - **LRU Cache** - Efficient memory caching
+- **Swagger** - API documentation
+- **Docker** - Containerization
 
 ### Project Structure
 
@@ -73,9 +77,16 @@ tests/                # Test files
    - Console and file transports
 
 5. **Data Persistence**
+
    - Prisma ORM for type-safe database operations
    - SQLite database for storing conversion history
    - Proper database indexing for performance
+
+6. **API Documentation**
+   - Interactive OpenAPI/Swagger documentation
+   - Available at /api-docs endpoint
+   - Detailed request/response schemas and examples
+   - Authentication information included
 
 ## API Reference
 
@@ -122,6 +133,7 @@ Authorization: Bearer <user-id>
 
 - Node.js (v14 or higher)
 - npm or yarn
+- Docker (optional, for containerized deployment)
 
 ### Installation
 
@@ -148,6 +160,24 @@ For development with auto-reload:
 npm run dev
 ```
 
+### Using Docker
+
+Build and run the Docker container:
+
+```bash
+# Build the Docker image
+docker build -t currency-conversion-service .
+
+# Run the container
+docker run -p 3000:3000 currency-conversion-service
+```
+
+Using Docker Compose:
+
+```bash
+docker-compose up
+```
+
 ### Building the Application
 
 ```bash
@@ -164,6 +194,14 @@ npm test
 
 ```bash
 npm run lint
+```
+
+### API Documentation
+
+Once the application is running, access the Swagger documentation at:
+
+```
+http://localhost:3000/api-docs
 ```
 
 ## Performance Considerations
