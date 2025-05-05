@@ -1,6 +1,6 @@
 # Currency Conversion Service
 
-A Node.js and Express-based currency conversion service that supports both FIAT and cryptocurrencies. The service uses the Coinbase API for real-time exchange rates and implements rate limiting based on workdays and weekends.
+A TypeScript and Express-based currency conversion service that supports both FIAT and cryptocurrencies. The service uses the Coinbase API for real-time exchange rates and implements rate limiting based on workdays and weekends.
 
 ## Features
 
@@ -13,11 +13,13 @@ A Node.js and Express-based currency conversion service that supports both FIAT 
 - Input validation with Zod
 - In-memory caching to reduce API calls
 - Structured logging with Winston
+- Full TypeScript support with strong typing
 
 ## Technical Architecture
 
 ### Core Technologies
 
+- **TypeScript** - Typed JavaScript superset
 - **Node.js** - JavaScript runtime
 - **Express** - Web framework
 - **Prisma** - ORM for database operations
@@ -25,6 +27,7 @@ A Node.js and Express-based currency conversion service that supports both FIAT 
 - **Zod** - Schema validation
 - **Winston** - Logging
 - **Jest** - Testing framework
+- **LRU Cache** - Efficient memory caching
 
 ### Project Structure
 
@@ -35,8 +38,8 @@ src/
 ├── middleware/       # Express middleware
 ├── routes/           # API routes
 ├── services/         # Business logic
-├── app.js            # Express application setup
-└── server.js         # Application entry point
+├── app.ts            # Express application setup
+└── server.ts         # Application entry point
 
 prisma/               # Prisma ORM configuration
 tests/                # Test files
@@ -58,7 +61,8 @@ tests/                # Test files
 
 3. **Caching Layer**
 
-   - In-memory cache for exchange rates
+   - In-memory cache using LRU Cache for efficient memory management
+   - Direct use of the LRUCache instance for better type safety and performance
    - 5-minute TTL to balance freshness and performance
    - Reduces load on external API
 
@@ -144,10 +148,22 @@ For development with auto-reload:
 npm run dev
 ```
 
+### Building the Application
+
+```bash
+npm run build
+```
+
 ### Running Tests
 
 ```bash
 npm test
+```
+
+### Running Linting
+
+```bash
+npm run lint
 ```
 
 ## Performance Considerations
@@ -156,16 +172,8 @@ npm test
 - **Database Indexing**: Key fields are indexed for faster queries
 - **Rate Limiting**: Prevents abuse and ensures fair usage
 - **Validation**: Early validation prevents unnecessary processing
+- **Type Safety**: TypeScript provides compile-time checks to prevent runtime errors
 
 ## Future Improvements
 
-- **Docker Support**: Containerize the application for easier deployment
-- **API Documentation**: Add Swagger/OpenAPI documentation
-- **More Currencies**: Support for additional currency pairs
-- **Webhooks**: Notifications for rate changes or quota usage
-- **Historical Data**: Access to historical conversion rates
-- **User Management**: Full user authentication system
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+- **External Cache**: Move the in-memory cache to an external resource like Redis for better scalability and persistence across service restarts
