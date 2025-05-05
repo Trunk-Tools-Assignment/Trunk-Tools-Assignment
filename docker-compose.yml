@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    # Build the container using the local Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000' # Map container port 3000 to host port 3000
+    environment:
+      # Use development mode for local development
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=file:/app/prisma/dev.db
+      # Add other environment variables here
+    volumes:
+      # Mount the src directory for development
+      - ./src:/app/src:ro
+      # Mount the prisma directory for database access
+      - ./prisma:/app/prisma
+      # Mount config files
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      # Create a named volume for logs to persist between container restarts
+      - app_logs:/app/logs
+    # Override the CMD from Dockerfile to use ts-node for live reloading
+    command: >
+      sh -c "npx prisma migrate dev --name init && npm run dev"
+    restart: unless-stopped # Automatically restart container if it crashes
+    healthcheck:
+      # Check if the application is healthy by making a request to /health
+      test:
+        [
+          'CMD',
+          'wget',
+          '--no-verbose',
+          '--spider',
+          'http://localhost:3000/health',
+        ]
+      interval: 30s # Check every 30 seconds
+      timeout: 5s # Allow 5 seconds for the health check to complete
+      retries: 3 # Retry 3 times before marking unhealthy
+      start_period: 5s # Give 5 seconds grace period during startup
+
+# Define named volumes for persistent data
+volumes:
+  app_logs: # Volume for application logs

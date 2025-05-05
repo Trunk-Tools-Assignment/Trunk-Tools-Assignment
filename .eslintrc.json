@@ -1,0 +1,54 @@
+{
+  /* Define environments that code is designed to run in */
+  "env": {
+    "node": true /* Node.js global variables and Node.js scoping */,
+    "es2022": true /* Enable ES2022 syntax support and globals */,
+    "jest": true /* Jest global variables for testing */
+  },
+
+  /* Extend from recommended ESLint configurations */
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+
+  /* Configure parser for TypeScript */
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2022 /* Use ECMAScript 2022 syntax */,
+    "sourceType": "module" /* Use ECMAScript modules */,
+    "project": ["./tsconfig.json", "./tsconfig.test.json"]
+  },
+
+  /* Enable TypeScript plugin */
+  "plugins": ["@typescript-eslint"],
+
+  /* Define custom rules */
+  "rules": {
+    "indent": ["error", 2] /* Use 2 spaces for indentation */,
+    "linebreak-style": ["error", "unix"] /* Use Unix line endings (LF) */,
+    "quotes": ["error", "single"] /* Use single quotes for strings */,
+    "semi": ["error", "always"] /* Require semicolons */,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_" }
+    ] /* Allow unused parameters starting with underscore */,
+    "no-console": [
+      "warn",
+      { "allow": ["warn", "error", "info"] }
+    ] /* Allow specific console methods */
+  },
+
+  /* Override rules for test files */
+  "overrides": [
+    {
+      "files": ["tests/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/ban-types": "off"
+      }
+    }
+  ],
+
+  /* Ignore specific files and directories */
+  "ignorePatterns": ["dist", "node_modules", "coverage", "jest.config.js"]
+}

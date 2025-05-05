@@ -1,0 +1,78 @@
+{
+  "name": "trunk-tools-assignment",
+  "version": "1.0.0",
+  "description": "Currency conversion service with support for FIAT and cryptocurrencies",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "jest --detectOpenHandles",
+    "test:watch": "jest --watch",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trunk-Tools-Assignment/Trunk-Tools-Assignment.git"
+  },
+  "keywords": [
+    "currency",
+    "conversion",
+    "crypto",
+    "fiat"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Trunk-Tools-Assignment/Trunk-Tools-Assignment/issues"
+  },
+  "homepage": "https://github.com/Trunk-Tools-Assignment/Trunk-Tools-Assignment#readme",
+  "dependencies": {
+    "@prisma/client": "^5.10.0",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "lru-cache": "^11.1.0",
+    "winston": "^3.11.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/express": "^5.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.3",
+    "@types/supertest": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.6",
+    "jest": "^29.7.0",
+    "jest-mock-extended": "^3.0.7",
+    "lint-staged": "^15.2.0",
+    "nodemon": "^3.0.3",
+    "prettier": "^3.1.1",
+    "prisma": "^5.10.0",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": "prettier --write"
+  }
+}

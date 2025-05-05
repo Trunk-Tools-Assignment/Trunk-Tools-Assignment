@@ -1,0 +1,24 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Version control
+.git
+.gitignore
+
+# Environment and configuration files 
+.env
+.env.*
+
+# Test and documentation files
+coverage
+tests
+*.md
+
+# OS files
+.DS_Store
+
+# TypeScript build info (but we want to keep the dist folder for production)
+*.tsbuildinfo 

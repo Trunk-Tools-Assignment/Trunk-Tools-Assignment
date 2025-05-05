@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+dist/
+
+# Test coverage
+coverage/
+
+# Build
+build/ 
